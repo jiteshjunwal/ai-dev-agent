@@ -1,0 +1,105 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <style>
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .cell {
+            width: 50px;
+            height: 50px;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+        .cell:hover {
+            background-color: #ccc;
+        }
+        .cell.x {
+            background-color: #0f0;
+        }
+        .cell.o {
+            background-color: #00f;
+        }
+        .winner {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="board">
+        <div class="cell" id="cell-0"></div>
+        <div class="cell" id="cell-1"></div>
+        <div class="cell" id="cell-2"></div>
+        <div class="cell" id="cell-3"></div>
+        <div class="cell" id="cell-4"></div>
+        <div class="cell" id="cell-5"></div>
+        <div class="cell" id="cell-6"></div>
+        <div class="cell" id="cell-7"></div>
+        <div class="cell" id="cell-8"></div>
+    </div>
+    <div class="winner"></div>
+    <script>
+        let currentPlayer = 'x';
+        let cells = document.querySelectorAll('.cell');
+        let winner = document.querySelector('.winner');
+
+        cells.forEach(cell => {
+            cell.addEventListener('click', () => {
+                if (cell.textContent === '') {
+                    cell.textContent = currentPlayer;
+                    if (checkWinner()) {
+                        winner.textContent = `Player ${currentPlayer} wins!`;
+                        cells.forEach(cell => cell.disabled = true);
+                    } else if (checkDraw()) {
+                        winner.textContent = 'It\'s a draw!';
+                        cells.forEach(cell => cell.disabled = true);
+                    } else {
+                        currentPlayer = currentPlayer === 'x' ? 'o' : 'x';
+                    }
+                }
+            });
+        });
+
+        function checkWinner() {
+            let winningCombinations = [
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8],
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8],
+                [0, 4, 8],
+                [2, 4, 6]
+            ];
+
+            for (let combination of winningCombinations) {
+                if (cells[combination[0]].textContent === cells[combination[1]].textContent &&
+                    cells[combination[1]].textContent === cells[combination[2]].textContent &&
+                    cells[combination[0]].textContent !== '') {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        function checkDraw() {
+            return cells.every(cell => cell.textContent !== '');
+        }
+    </script>
+</body>
+</html>
+```
