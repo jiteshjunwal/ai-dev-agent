@@ -1,2 +1,2 @@
 Generate ONLY code. No explanation.
-Create a complete Tic Tac Toe web app using HTML, CSS, and JavaScript in a single file.
+Create a simple calculator web app using HTML, CSS, and JavaScript in a single file.
