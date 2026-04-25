@@ -1,0 +1,33 @@
+name: AI Agent
+
+on:
+  push:
+    paths:
+      - 'prompt.txt'
+
+jobs:
+  run-agent:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Run agent
+        run: |
+          chmod +x run_agent.sh
+          ./run_agent.sh
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+
+      - name: Commit output
+        run: |
+          git config --global user.name "ai-agent"
+          git config --global user.email "ai@bot.com"
+          git add output/
+          git commit -m "AI generated code" || echo "No changes"
+          git push
+          
