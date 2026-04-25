@@ -1,26 +1,48 @@
 #!/bin/bash
 
-echo "SCRIPT STARTED"
+set -e
+
+echo "🚀 SCRIPT STARTED"
 
 mkdir -p output
 
-echo "Reading prompt..."
-PROMPT=$(cat prompt.txt)
+# Read prompt safely (JSON-escaped)
+echo "📖 Reading prompt..."
+PROMPT=$(jq -Rs . < prompt.txt)
 
-echo "Calling Groq..."
+echo "🤖 Calling Groq API..."
 
-curl https://api.groq.com/openai/v1/chat/completions \
+RESPONSE=$(curl -s https://api.groq.com/openai/v1/chat/completions \
   -H "Authorization: Bearer $GROQ_API_KEY" \
   -H "Content-Type: application/json" \
   -d "{
     \"model\": \"llama-3.1-8b-instant\",
     \"messages\": [
-      {\"role\": \"user\", \"content\": \"$PROMPT\"}
-    ]
-  }" > output/result.json
+      {
+        \"role\": \"system\",
+        \"content\": \"You are an expert frontend engineer. Output ONLY valid HTML code. No markdown, no explanation, no backticks.\"
+      },
+      {
+        \"role\": \"user\",
+        \"content\": $PROMPT
+      }
+    ],
+    \"temperature\": 0.2
+  }")
 
-echo "Saving output..."
+# Save raw response for debugging
+echo "$RESPONSE" > output/result.json
 
-jq -r '.choices[0].message.content' output/result.json > index.html
+echo "🧠 Extracting model output..."
 
-echo "Done!"
+CONTENT=$(echo "$RESPONSE" | jq -r '.choices[0].message.content // empty')
+
+if [ -z "$CONTENT" ]; then
+  echo "❌ Error: Empty response from model"
+  exit 1
+fi
+
+# Write final HTML output
+echo "$CONTENT" > output/index.html
+
+echo "✅ Build complete: index.html generated"
