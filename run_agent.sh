@@ -43,6 +43,6 @@ if [ -z "$CONTENT" ]; then
 fi
 
 # Write final HTML output
-echo "$CONTENT" > output/index.html
+echo "$CONTENT" > index.html
 
 echo "✅ Build complete: index.html generated"
