@@ -1,0 +1,60 @@
+**Simple Login Form in HTML**
+================================
+
+Below is a simple HTML page with a login form consisting of email and password fields, along with a submit button.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: lightgray;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        form {
+            width: 30%;
+            padding: 20px;
+            border: 1px solid gray;
+            border-radius: 10px;
+            background-color: white;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <form action="" method="post">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+        
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+        
+        <button type="submit">Login</button>
+    </form>
+</body>
+</html>
+```
+
+This HTML code will create a basic login form with the following features:
+
+*   The form will be centered on the webpage, with a light gray background and a white form container.
+*   The form will have an email input field and a password input field, both with a label for clarity.
+*   There will be a submit button that will trigger the form submission.
+*   The form will be enclosed in a container element with a style applied to it for a cleaner and more visually appealing design.
