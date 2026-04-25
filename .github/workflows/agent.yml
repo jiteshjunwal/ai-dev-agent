@@ -1,5 +1,7 @@
 name: AI Agent
 
+permissions:
+  contents: write
 on:
   push:
     paths:
@@ -29,5 +31,5 @@ jobs:
           git config --global user.email "ai@bot.com"
           git add output/
           git commit -m "AI generated code" || echo "No changes"
-          git push
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           
