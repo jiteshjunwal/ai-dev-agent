@@ -21,6 +21,6 @@ curl https://api.groq.com/openai/v1/chat/completions \
 
 echo "Saving output..."
 
-jq -r '.choices[0].message.content' output/result.json > output/generated_code.txt
+jq -r '.choices[0].message.content' output/result.json > index.html
 
 echo "Done!"
